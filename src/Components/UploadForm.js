@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
 const INITIAL_STATE = {
@@ -23,7 +24,6 @@ class UploadForm extends React.Component {
   }
 
   onFileUploaded(file) {
-    console.log(file);
     const csvFileName = file.name;
     this.setState(prevState => ({ ...prevState, file, csvFileName }));
   }
@@ -37,6 +37,7 @@ class UploadForm extends React.Component {
   }
 
   render() {
+    const { isLoading } = this.props;
     const { fileName, file, csvFileName } = this.state;
     return (
       <form onSubmit={(e) => this.submitForm(e)}>
@@ -68,14 +69,19 @@ class UploadForm extends React.Component {
           <button
             className="btn btn-primary upload-button"
             type="submit"
-            disabled={!fileName || !file}
+            disabled={!fileName || !file || isLoading}
           >
-            Upload
+            {isLoading ? <i className="fa fa-circle-o-notch fa-spin" /> : 'Upload'}
           </button>
         </div>
       </form>
     )
   }
 }
+
+UploadForm.propTypes = {
+  onSubmit: PropTypes.func,
+  isLoading: PropTypes.bool
+};
 
 export default UploadForm;
