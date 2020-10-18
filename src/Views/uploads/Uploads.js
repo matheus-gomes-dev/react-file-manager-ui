@@ -26,7 +26,6 @@ class Upload extends React.Component {
   }
 
   async fetchUploads(page = 1) {
-    console.log('*** fetchUploads ***');
     this.setState(prevState => ({ ...prevState, isLoading: true }));
     const results = await api.getUploads(page);
     const uploads = get(results, 'data.rows', []);

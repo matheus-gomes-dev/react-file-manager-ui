@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const UploadsTable = ({
   isLoading,
@@ -31,15 +32,24 @@ const UploadsTable = ({
             <th scope="col">#</th>
             <th scope="col">File name</th>
             <th scope="col">Created At</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           {data.map(row => (
-            <tr key={`uploads_table_row_${row.id}`}>
-              <th scope="row">{row.id}</th>
-              <td>{row.name}</td>
-              <td>{row.createdAt}</td>
-            </tr>
+              <tr key={`uploads_table_row_${row.id}`}>
+              
+                <th scope="row">{row.id}</th>
+                <td>{row.name}</td>
+                <td>{row.createdAt}</td>
+                <td>
+                  <Link to={{ pathname: `uploads/${row.id}`}}>
+                    <button title="View file">
+                      <i className="fa fa-search" />
+                    </button>
+                  </Link>
+                </td>
+              </tr>
           ))}
         </tbody>
       </table>
