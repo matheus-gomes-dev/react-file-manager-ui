@@ -41,6 +41,30 @@
   border: 1px solid #e6e6e6;
 }
 
+.upload-details-created_at {
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.upload-details-data-wrapper {
+  max-width: 90%;
+  margin: auto;
+  margin-top: 40px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.upload-details-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.upload-details-back-button {
+  width: 150px;
+}
+
 .my-uploads-loader {
   height: 50px;
   display: flex;

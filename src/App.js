@@ -4,7 +4,7 @@ import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-d
 import './App.css';
 import Header from './Components/Header';
 import Upload from './Views/uploads/Uploads';
-import UploadById from './Views/uploads/UploadById';
+import UploadDetails from './Views/uploads/UploadDetails';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/uploads" component={Upload} />
-          <Route exact path="/uploads/:id" component={UploadById} />
+          <Route exact path="/uploads/:id" component={UploadDetails} />
           <Redirect from="*" to="/uploads" />
         </Switch>
       </Router>

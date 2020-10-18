@@ -19,7 +19,7 @@ const api = {
       return;
     }
   },
-  getUploads: async (page) => {
+  getUploads: async (page = 1) => {
     try {
       const result = await axios.get(`${APIURL}?page=${page}`);
       return result;
