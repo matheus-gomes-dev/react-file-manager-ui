@@ -29,6 +29,7 @@
 }
 
 .my-uploads-wrapper {
+  height: 500px;
   width: 450px;
   max-width: 90%;
   margin: auto;
@@ -46,6 +47,7 @@
   align-items: center;
   justify-content: center;
   color: #e6e6e6;
+  font-size: 35px;
 }
 
 .pagination-container {

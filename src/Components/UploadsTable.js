@@ -10,6 +10,7 @@ const UploadsTable = ({
   onPreviousPage,
   onNextPage
 }) => {
+
   if (isLoading) {
     return (
       <div className="my-uploads-loader">
@@ -17,9 +18,11 @@ const UploadsTable = ({
       </div>
     )
   }
+
   const hasPagination = count > perPage;
   const hasPrevious = currentPage > 1;
   const hasNext = (currentPage * perPage) < count;
+
   return (
     <div>
       <table className="table table-striped">
@@ -45,14 +48,20 @@ const UploadsTable = ({
           <button
             className="btn btn-primary pagination-button"
             disabled={!hasPrevious}
-            onClick={onPreviousPage}
+            onClick={(e) => {
+              e.preventDefault();
+              onPreviousPage();
+            }}
           >
             Previous
           </button>
           <button
             className="btn btn-primary pagination-button"
             disabled={!hasNext}
-            onClick={onNextPage}
+            onClick={(e) => {
+              e.preventDefault();
+              onNextPage();
+            }}
           >
             Next
           </button>

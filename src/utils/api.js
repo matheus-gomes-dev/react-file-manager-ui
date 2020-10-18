@@ -19,9 +19,9 @@ const api = {
       return;
     }
   },
-  getUploads: async () => {
+  getUploads: async (page) => {
     try {
-      const result = await axios.get(APIURL);
+      const result = await axios.get(`${APIURL}?page=${page}`);
       return result;
     } catch (error) {
       console.error(error);

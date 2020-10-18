@@ -17,19 +17,30 @@ class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.onTableRefresh = this.onTableRefresh.bind(this);
+    this.fetchUploads = this.fetchUploads.bind(this);
     this.state = INITIAL_STATE;
   }
 
   async componentDidMount() {
+    this.fetchUploads();
+  }
+
+  async fetchUploads(page = 1) {
+    console.log('*** fetchUploads ***');
     this.setState(prevState => ({ ...prevState, isLoading: true }));
-    const results = await api.getUploads();
+    const results = await api.getUploads(page);
     const uploads = get(results, 'data.rows', []);
     const count = get(results, 'data.count', 0);
-    this.setState(prevState => ({ ...prevState, isLoading: false, uploads, count }));
+    this.setState(prevState => ({
+      ...prevState,
+      isLoading: false,
+      uploads,
+      count,
+      currentPage: page
+    }));
   }
 
   onTableRefresh(result) {
-    console.log(result);
     const count = get(result, 'data.count', 0);
     const uploads = get(result, 'data.rows', []);
     this.setState({ ...INITIAL_STATE, count, uploads });
@@ -54,6 +65,8 @@ class Upload extends React.Component {
             data={uploads}
             count={count}
             currentPage={currentPage}
+            onPreviousPage={() => this.fetchUploads(currentPage - 1)}
+            onNextPage={() => this.fetchUploads(currentPage + 1)}
           />
         </div>
       </div>
