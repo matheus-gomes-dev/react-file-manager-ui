@@ -28,6 +28,38 @@
   margin-bottom: 40px;
 }
 
+.my-uploads-wrapper {
+  width: 450px;
+  max-width: 90%;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.table-striped {
+  border: 1px solid #e6e6e6;
+}
+
+.my-uploads-loader {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e6e6e6;
+}
+
+.pagination-container {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.pagination-button {
+  width: 150px;
+  height: 35px;
+}
+
 .upload-button {
   width: 300px;
 }

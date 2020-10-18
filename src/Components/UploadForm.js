@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
+import api from '../utils/api';
+
 const INITIAL_STATE = {
   fileName: '',
   csvFileName: '',
   file: null,
+  isLoading: false,
 };
 
 class UploadForm extends React.Component {
@@ -28,17 +31,25 @@ class UploadForm extends React.Component {
     this.setState(prevState => ({ ...prevState, file, csvFileName }));
   }
 
-  submitForm(e) {
-    const { onSubmit } = this.props;
+  async submitForm(e) {
+    const { onTableRefresh } = this.props;
     const { fileName, file } = this.state;
     e.preventDefault();
-    onSubmit(fileName, file);
+    this.setState(prevState => ({ ...prevState, isLoading: true }));
+    const result = await api.uploadFile(fileName, file);
+    const data = await api.getUploads();
+    this.setState(prevState => ({ ...prevState, isLoading: false }));
+    if (!result || !data) {
+      window.alert('Error uploading file!');
+    } else {
+      window.alert('File uploaded!');
+    }
     this.setState(INITIAL_STATE);
+    onTableRefresh(data);
   }
 
   render() {
-    const { isLoading } = this.props;
-    const { fileName, file, csvFileName } = this.state;
+    const { fileName, file, csvFileName, isLoading } = this.state;
     return (
       <form onSubmit={(e) => this.submitForm(e)}>
         <div>
@@ -80,8 +91,7 @@ class UploadForm extends React.Component {
 }
 
 UploadForm.propTypes = {
-  onSubmit: PropTypes.func,
-  isLoading: PropTypes.bool
+  onTableRefresh: PropTypes.func,
 };
 
 export default UploadForm;
