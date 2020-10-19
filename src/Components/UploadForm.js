@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
+import { get } from 'lodash';
 
 import api from '../utils/api';
 
@@ -26,8 +27,9 @@ class UploadForm extends React.Component {
     this.setState(prevState => ({ ...prevState, fileName: e.target.value }));
   }
 
-  onFileUploaded(file) {
-    const csvFileName = file.name;
+  onFileUploaded(uploadedFiles) {
+    const file = uploadedFiles[0];
+    const csvFileName = get(file, 'name');
     this.setState(prevState => ({ ...prevState, file, csvFileName }));
   }
 
@@ -62,7 +64,7 @@ class UploadForm extends React.Component {
           />
         </div>
         <div>
-          <Dropzone onDrop={uploadedFiles => this.onFileUploaded(uploadedFiles[0])} accept=".csv">
+          <Dropzone onDrop={this.onFileUploaded} accept=".csv">
             {({getRootProps, getInputProps}) => (
               <div className="dropzone-box" {...getRootProps()}>
                 <div className="upload-icon">
