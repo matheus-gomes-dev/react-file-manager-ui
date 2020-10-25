@@ -20,13 +20,8 @@ const api = {
     }
   },
   getUploads: async (page = 1) => {
-    try {
-      const result = await axios.get(`${APIURL}?page=${page}`);
-      return result;
-    } catch (error) {
-      console.error(error);
-      return;
-    }
+    const result = await axios.get(`${APIURL}?page=${page}`);
+    return result;
   },
   getUploadById: async (id) => {
     try {

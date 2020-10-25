@@ -46,7 +46,6 @@ class Upload extends React.Component {
   }
 
   render() {
-    const { isLoading, uploads, currentPage, count } = this.state;
     return (
       <div className="section-container">
         <div className="section-header">
@@ -59,14 +58,7 @@ class Upload extends React.Component {
           <h1>My Uploads</h1>
         </div>
         <div className="my-uploads-wrapper">
-          <UploadsTable
-            isLoading={isLoading}
-            data={uploads}
-            count={count}
-            currentPage={currentPage}
-            onPreviousPage={() => this.fetchUploads(currentPage - 1)}
-            onNextPage={() => this.fetchUploads(currentPage + 1)}
-          />
+          <UploadsTable />
         </div>
       </div>
     );

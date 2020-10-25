@@ -1,94 +1,93 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const UploadsTable = ({
-  isLoading,
-  data = [],
-  count = 0,
-  currentPage = 1,
-  perPage = 10,
-  onPreviousPage,
-  onNextPage
-}) => {
+class UploadsTable extends React.Component {
 
-  if (isLoading) {
-    return (
-      <div className="my-uploads-loader">
-        <i className="fa fa-circle-o-notch fa-spin" />
-      </div>
-    )
+  componentDidMount() {
+    const { loadUploads } = this.props;
+    loadUploads();
   }
 
-  const hasPagination = count > perPage;
-  const hasPrevious = currentPage > 1;
-  const hasNext = (currentPage * perPage) < count;
+  render() {
 
-  return (
-    <div>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">File name</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(row => (
-              <tr key={`uploads_table_row_${row.id}`}>
-              
-                <th scope="row">{row.id}</th>
-                <td>{row.name}</td>
-                <td>{row.createdAt}</td>
-                <td>
-                  <Link to={{ pathname: `uploads/${row.id}`}}>
-                    <button title="View file">
-                      <i className="fa fa-search" />
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-          ))}
-        </tbody>
-      </table>
-      {hasPagination && (
-        <div className="pagination-container">
-          <button
-            className="btn btn-primary pagination-button"
-            disabled={!hasPrevious}
-            onClick={(e) => {
-              e.preventDefault();
-              onPreviousPage();
-            }}
-          >
-            Previous
-          </button>
-          <button
-            className="btn btn-primary pagination-button"
-            disabled={!hasNext}
-            onClick={(e) => {
-              e.preventDefault();
-              onNextPage();
-            }}
-          >
-            Next
-          </button>
+    const {
+      isLoading,
+      uploads = [],
+      count = 0,
+      page = 1,
+      perPage = 10,
+      loadUploads
+    } = this.props;
+
+    if (isLoading) {
+      return (
+        <div className="my-uploads-loader">
+          <i className="fa fa-circle-o-notch fa-spin" />
         </div>
-      )}
-    </div>
-  )
-}
+      )
+    }
+  
+    const hasPagination = count > perPage;
+    const hasPrevious = page > 1;
+    const hasNext = (page * perPage) < count;
+  
+    return (
+      <div>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">File name</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uploads.map(row => (
+                <tr key={`uploads_table_row_${row.id}`}>
+                
+                  <th scope="row">{row.id}</th>
+                  <td>{row.name}</td>
+                  <td>{row.createdAt}</td>
+                  <td>
+                    <Link to={{ pathname: `uploads/${row.id}`}}>
+                      <button title="View file">
+                        <i className="fa fa-search" />
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+            ))}
+          </tbody>
+        </table>
+        {hasPagination && (
+          <div className="pagination-container">
+            <button
+              className="btn btn-primary pagination-button"
+              disabled={!hasPrevious}
+              onClick={(e) => {
+                e.preventDefault();
+                loadUploads(page - 1);
+              }}
+            >
+              Previous
+            </button>
+            <button
+              className="btn btn-primary pagination-button"
+              disabled={!hasNext}
+              onClick={(e) => {
+                e.preventDefault();
+                loadUploads(page + 1);
+              }}
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    )    
+  }
 
-UploadsTable.propTypes = {
-  isLoading: PropTypes.bool,
-  data: PropTypes.array,
-  count: PropTypes.number,
-  currentPage: PropTypes.number,
-  perPage: PropTypes.number,
-  onPreviousPage: PropTypes.func.isRequired,
-  onNextPage: PropTypes.func.isRequired
 }
 
 export default UploadsTable;
