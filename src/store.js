@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+
+import api from 'utils/api';
 import UploadsReducer from 'reducers/uploads';
 
 const rootReducer = combineReducers({
@@ -7,5 +10,6 @@ const rootReducer = combineReducers({
 });
 
 export default configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: [thunk.withExtraArgument({ api })]
 });

@@ -2,7 +2,7 @@ import { connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
-import uploadsActions from 'actions/uploads';
+import uploadsCommands from 'commands/uploads';
 import UploadsTable from './component';
 
 const mapStateToProps = state => ({
@@ -11,13 +11,14 @@ const mapStateToProps = state => ({
   page: state.UploadsReducer.page,
   count: state.UploadsReducer.count,
 });
-const mapDispatchToProps = dispatch => bindActionCreators(uploadsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(uploadsCommands, dispatch);
 
 UploadsTable.propTypes = {
   isLoading: PropTypes.bool,
   uploads: PropTypes.array,
   page: PropTypes.number,
-  count: PropTypes.number
+  count: PropTypes.number,
+  loadUploads: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadsTable);
