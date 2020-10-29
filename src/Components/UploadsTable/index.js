@@ -10,6 +10,9 @@ const mapStateToProps = state => ({
   uploads: state.UploadsReducer.uploads,
   page: state.UploadsReducer.page,
   count: state.UploadsReducer.count,
+  hasPagination: state.UploadsReducer.hasPagination,
+  hasPrevious: state.UploadsReducer.hasPrevious,
+  hasNext: state.UploadsReducer.hasNext
 });
 const mapDispatchToProps = dispatch => bindActionCreators(uploadsCommands, dispatch);
 
@@ -18,7 +21,10 @@ UploadsTable.propTypes = {
   uploads: PropTypes.array,
   page: PropTypes.number,
   count: PropTypes.number,
-  loadUploads: PropTypes.func.isRequired
+  loadUploads: PropTypes.func.isRequired,
+  hasPagination: PropTypes.bool,
+  hasPrevious: PropTypes.bool,
+  hasNext: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadsTable);

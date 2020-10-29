@@ -2,14 +2,13 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 
-import api from 'utils/api';
 import UploadsReducer from 'reducers/uploads';
 
 const rootReducer = combineReducers({
   UploadsReducer,
 });
 
-export default configureStore({
+export default (extraArguments) => configureStore({
   reducer: rootReducer,
-  middleware: [thunk.withExtraArgument({ api })]
+  middleware: [thunk.withExtraArgument(extraArguments)]
 });

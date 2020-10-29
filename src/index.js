@@ -4,10 +4,11 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
+import api from 'utils/api';
+import createStore from './store';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={createStore({ api })}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

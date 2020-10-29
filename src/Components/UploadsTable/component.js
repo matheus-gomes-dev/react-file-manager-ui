@@ -13,10 +13,11 @@ class UploadsTable extends React.Component {
     const {
       isLoading,
       uploads = [],
-      count = 0,
       page = 1,
-      perPage = 10,
-      loadUploads
+      loadUploads,
+      hasPagination,
+      hasPrevious,
+      hasNext
     } = this.props;
 
     if (isLoading) {
@@ -27,9 +28,9 @@ class UploadsTable extends React.Component {
       )
     }
   
-    const hasPagination = count > perPage;
-    const hasPrevious = page > 1;
-    const hasNext = (page * perPage) < count;
+    // const hasPagination = count > perPage;
+    // const hasPrevious = page > 1;
+    // const hasNext = (page * perPage) < count;
   
     return (
       <div>

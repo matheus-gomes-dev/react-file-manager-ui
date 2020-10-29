@@ -3,6 +3,9 @@ const INITIAL_STATE = {
   uploads: [],
   page: 1,
   count: 0,
+  hasPagination: false,
+  hasPrevious: false,
+  hasNext: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,7 +14,20 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, isLoading: true };
     case 'UPLOADS_LOAD_SUCCEEDED':
       const { data: uploads, page, count } = action.payload;
-      return { ...state, isLoading: false, uploads, page, count };
+      const perPage = 10;
+      const hasPagination = count > perPage;
+      const hasPrevious = page > 1;
+      const hasNext = (page * perPage) < count;
+      return {
+        ...state,
+        isLoading: false,
+        uploads,
+        page,
+        count,
+        hasPagination,
+        hasPrevious,
+        hasNext
+      };
     case 'UPLOADS_LOAD_FAILED':
       return { ...state, isLoading: false };
     default:

@@ -5,7 +5,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 
 import App from '../App';
-import store from 'store';
+import api from 'utils/api';
+import createStore from 'store';
 
 configure({adapter: new Adapter()});
 
@@ -14,7 +15,7 @@ describe('App', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
-      <Provider store={store}>
+      <Provider store={createStore({ api })}>
         <App />
       </Provider>,
       div
