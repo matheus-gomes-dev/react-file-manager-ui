@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -6,21 +8,17 @@ const Table = ({
   isLoading,
   head,
   data,
-  page,
-  loadData,
+  loadNext,
+  loadPrevious,
   hasPagination,
   hasPrevious,
   hasNext
 }) => {
 
-  useEffect(() => {
-    loadData(1)
-  }, [loadData]);
-
   if (isLoading) {
     return (
       <div className="my-uploads-loader">
-        <i className="fa fa-circle-o-notch fa-spin" />
+        <FontAwesomeIcon icon={faSpinner} spin />
       </div>
     )
   }
@@ -39,16 +37,16 @@ const Table = ({
           {data.map((row, rowIndex) => (
               <tr key={`table_row_${rowIndex}`}>
               
-                {row.map((value, index) => (
-                  <td key={`table_value_${rowIndex}_${index}`}>{value}</td>
+                {Object.keys(row).map((key, index) => (
+                  <td key={`table_value_${rowIndex}_${index}`}>{row[key]}</td>
                 ))}
-                {/* <td>
+                <td>
                   <Link to={{ pathname: `uploads/${row.id}`}}>
                     <button title="View file">
-                      <i className="fa fa-search" />
+                      <FontAwesomeIcon icon={faSearch} />
                     </button>
                   </Link>
-                </td> */}
+                </td>
               </tr>
           ))}
         </tbody>
@@ -58,20 +56,14 @@ const Table = ({
           <button
             className="btn btn-primary pagination-button"
             disabled={!hasPrevious}
-            onClick={(e) => {
-              e.preventDefault();
-              loadData(page - 1);
-            }}
+            onClick={loadPrevious}
           >
             Previous
           </button>
           <button
             className="btn btn-primary pagination-button"
             disabled={!hasNext}
-            onClick={(e) => {
-              e.preventDefault();
-              loadData(page + 1);
-            }}
+            onClick={loadNext}
           >
             Next
           </button>
@@ -82,27 +74,25 @@ const Table = ({
 }
 
 Table.propTypes = {
-  head: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
-  data: PropTypes.array.isRequired,
-  page: PropTypes.number,
-  count: PropTypes.number,
-  loadData: PropTypes.func.isRequired,
+  head: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadPrevious: PropTypes.func,
+  loadNext: PropTypes.func,
   hasPagination: PropTypes.bool,
   hasPrevious: PropTypes.bool,
   hasNext: PropTypes.bool
 };
 
 Table.defaultProps = {
+  isLoading: false,
   head: ['#', 'Head 1', 'Head 2'],
   data: [
-    ['1', 'Value 1', 'Value 2'],
-    ['2', 'Value 3', 'Value 4']
+    { key: '1', value1: 'Value 1', value2: 'Value 2' },
+    { key: '2', value1: 'Value 3', value2: 'Value 4' },
   ],
-  loadData: () => console.log('faer'),
-  isLoading: false,
-  page: 1,
-  count: 0,
+  loadPrevious: undefined,
+  loadNext: undefined,
   hasPagination: false,
   hasPrevious: false,
   hasNext: false
