@@ -28,10 +28,6 @@ class UploadsTable extends React.Component {
       )
     }
   
-    // const hasPagination = count > perPage;
-    // const hasPrevious = page > 1;
-    // const hasNext = (page * perPage) < count;
-  
     return (
       <div>
         <table className="table table-striped">
